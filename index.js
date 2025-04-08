@@ -7,6 +7,25 @@ import { typeDefs } from './schema.js';
 const server = new ApolloServer({
   typeDefs,
   resolvers: {
+    Booking: {
+      guest(parent) {
+        return db.guests.find(guest => guest.id === parent.guest_id);
+      },
+      room(parent) {
+        return db.rooms.find(room => room.id === parent.room_id);
+      }
+    },
+    Payment: {
+      booking(parent) {
+        return db.bookings.find(booking => booking.id === parent.booking_id);
+      }
+    },
+    
+    ServiceUsed: {
+      booking(parent) {
+        return db.bookings.find(booking => booking.id === parent.booking_id);
+      }
+    },
     Query: {
       rooms() {
         // Assuming `db.rooms` holds your room data (replace with actual DB query logic)
